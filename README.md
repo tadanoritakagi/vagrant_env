@@ -41,7 +41,102 @@ $ git commit -m "initial commit"
 
 ***
 
+#### vim設定  
+
+* vimのcookbookを作成  
+$ bundle exec knife cookbook create vim -o site-cookbooks  
+* レシピを作成  
+vim site-books/vim/recipe/default.rb  
+※ 実際の上記ファイルを参照  
+* nodeにレシピを入れる  
+$ vim nodes/hoge.json  
+※ 実際の上記ファイルを参照  
+* nodeにインストール  
+$ bundle exec knife solo cook hoge  
+* プロビジョニング  
+$ vagrant provision  
+
+***
+
 #### apache設定  
+
+* apacheのcookbookを作成  
+$ bundle exec knife cookbook create apache -o site-cookbooks  
+* レシピを作成  
+vim site-books/apache/recipe/default.rb  
+※ 実際の上記ファイルを参照  
+* nodeにレシピを入れる  
+$ vim nodes/hoge.json  
+※ 実際の上記ファイルを参照  
+* nodeにインストール  
+$ bundle exec knife solo cook hoge  
+* プロビジョニング  
+$ vagrant provision  
+* apacheの設定ファイルを作成  
+まずはゲストosの中のhttpd.confファイルを共有フォルダ経由でホストosにコピー  
+$ ssh hoge  
+[vagrant@localhost~]$ cp /etc/httpd/conf/httpd.conf /vagrant/site-cookbooks/apahce/templates/default/httpd.conf.erb  
+* レシピを編集  
+$ vim site-books/apache/recipe/default.rb  
+※ 実際の上記ファイルを参照  
+* nodeにインストール  
+$ bundle exec knife solo cook hoge  
+* プロビジョニング  
+$ vagrant provision  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
