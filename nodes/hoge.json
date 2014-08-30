@@ -7,7 +7,8 @@
   "recipe[vim]",
   "recipe[apache]",
   "recipe[mysql]",
-  "recipe[ruby-env]"
+  "recipe[ruby-env]",
+  "recipe[nodejs]"
   ],
 
   "automatic": {
