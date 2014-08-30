@@ -6,6 +6,6 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-package "vim-enhancehd" do
+package "vim-enhanced" do
   action :install
 end

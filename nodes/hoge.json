@@ -1,7 +1,14 @@
 {
-  "run_list": [
+  "mysql": {
+    "server_root_password": "rootpass"
+  },
 
+  "run_list": [
+  "recipe[vim]",
+  "recipe[apache]",
+  "recipe[mysql]"
   ],
+  
   "automatic": {
     "ipaddress": "hoge"
   }
