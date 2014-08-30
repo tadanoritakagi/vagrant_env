@@ -22,7 +22,7 @@ source 'https://api.berkshelf.com'
 * vagrantファイルを作成  
 $ vagrant init osName  
 * vagrantFile編集  
-vim vagrantFile  
+$ vim vagrantFile  
 ipアドレスのコメントだけ外す  
 * vagrantを初期化  
 $ vagrant up  
@@ -46,7 +46,7 @@ $ git commit -m "initial commit"
 * vimのcookbookを作成  
 $ bundle exec knife cookbook create vim -o site-cookbooks  
 * レシピを作成  
-vim site-books/vim/recipe/default.rb  
+$ vim site-cookbooks/vim/recipe/default.rb  
 ※ 実際の上記ファイルを参照  
 * nodeにレシピを入れる  
 $ vim nodes/hoge.json  
@@ -63,7 +63,7 @@ $ vagrant provision
 * apacheのcookbookを作成  
 $ bundle exec knife cookbook create apache -o site-cookbooks  
 * レシピを作成  
-vim site-books/apache/recipe/default.rb  
+$ vim site-cookbooks/apache/recipe/default.rb  
 ※ 実際の上記ファイルを参照  
 * nodeにレシピを入れる  
 $ vim nodes/hoge.json  
@@ -84,62 +84,71 @@ $ bundle exec knife solo cook hoge
 * プロビジョニング  
 $ vagrant provision  
 
+***
 
+#### mysql設定  
 
+* mysqlのcookbookを作成  
+$ bundle exec knife cookbook create mysql -o site-cookbooks  
+* レシピを作成  
+$ vim site-cookbooks/mysql/recipe/default.rb  
+※ 実際の上記ファイルを参照  
+* 変数を設定する  
+$ vim site-cookbooks/mysql/attributes/default.rb  
+※ 実際の上記ファイルを参照  
+* 初期パスワードを設定する  
+$ vim site-cookbooks/mysql/recipe/default.rb  
+$ vim nodes/hoge.json  
+※ 実際の上記ファイルを参照  
+* nodeにレシピを入れる  
+$ vim nodes/hoge.json  
+※ 実際の上記ファイルを参照  
+* nodeにインストール  
+$ bundle exec knife solo cook hoge  
+* プロビジョニング  
+$ vagrant provision  
 
+***
 
+#### ruby設定  
 
+* rubyのcookbookを作成  
+$ bundle exec knife cookbook create ruby-env -o site-cookbooks  
+* rbenv(install,rehash,globalコマンド)とruby-builとbundlerをインストールするレシピを作成  
+$ vim site-cookbooks/ruby-env/recipe/default.rb  
+※ 実際の上記ファイルを参照  
+* 変数を設定する  
+$ vim site-cookbooks/ruby-env/attributes/default.rb  
+※ 実際の上記ファイルを参照  
+* 環境変数を変更する  
+※ rubyのバージョンはデフォルトで2.1.2にしてある  
+rbenv install -lからのrbenv installで好きなバージョンに変更可能  
+$ vim site-cookbooks/ruby-env/templates/default/.bash_profile.erb  
+※ 実際の上記ファイルを参照  
+* nodeにレシピを入れる  
+$ vim nodes/hoge.json  
+※ 実際の上記ファイルを参照  
+* nodeにインストール  
+$ bundle exec knife solo cook hoge  
+* プロビジョニング  
+$ vagrant provision  
 
+***
 
+#### node.js設定  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+* node.jsのcookbookを作成  
+$ bundle exec knife cookbook create nodejs -o site-cookbooks  
+* node.jsをインストールするレシピを作成  
+$ vim site-cookbooks/nodejs/recipe/default.rb  
+※ 実際の上記ファイルを参照  
+* 変数を設定する  
+$ vim site-cookbooks/nodejs/attributes/default.rb  
+※ 実際の上記ファイルを参照  
+* nodeにレシピを入れる  
+$ vim nodes/hoge.json  
+※ 実際の上記ファイルを参照  
+* nodeにインストール  
+$ bundle exec knife solo cook hoge  
+* プロビジョニング  
+$ vagrant provision  
