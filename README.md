@@ -114,14 +114,16 @@ $ vagrant provision
 
 * rubyのcookbookを作成  
 $ bundle exec knife cookbook create ruby-env -o site-cookbooks  
-* rbenv(install,rehash,globalコマンド)とruby-builとbundlerをインストールするレシピを作成  
+* rbenv install, rbenv rehash, rbenv global, ruby-buil, bundler  
+rails, nokogiri(依存するlibxml2, libxslt)をインストールするレシピを作成  
 $ vim site-cookbooks/ruby-env/recipe/default.rb  
 ※ 実際の上記ファイルを参照  
 * 変数を設定する  
 $ vim site-cookbooks/ruby-env/attributes/default.rb  
 ※ 実際の上記ファイルを参照  
 * 環境変数を変更する  
-※ rubyのバージョンはデフォルトで2.1.2にしてある  
+※ rubyのバージョンはデフォルトで2.0.0-p481にしてある  
+※ railsのバージョンはデフォルトで4.0.0にしてある  
 rbenv install -lからのrbenv installで好きなバージョンに変更可能  
 $ vim site-cookbooks/ruby-env/templates/default/.bash_profile.erb  
 ※ 実際の上記ファイルを参照  
