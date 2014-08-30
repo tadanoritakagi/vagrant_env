@@ -69,13 +69,41 @@ execute "rbenv global #{node['ruby-env']['version']}" do
   environment 'HOME' => "/home/#{node['ruby-env']['user']}"
 end
 
-# rbenv-rehashとbundlerのインストール
-%w{rbenv-rehash bundler}.each do |gem|
-  execute "gem install #{gem}" do
-    command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install #{gem}"
+# railsのインストール
+  execute "gem install rails -v '#{node['ruby-env']['rails_version']}'" do
+    command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install rails -v '#{node['ruby-env']['rails_version']}'"
     user node['ruby-env']['user']
     group node['ruby-env']['group']
     environment 'HOME' => "/home/#{node['ruby-env']['user']}"
-    not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep #{gem}"
-  end
+    not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep rails -v '#{node['ruby-env']['rails_version']}'"
 end
+
+
+# rbenv-rehashのインストール
+  execute "gem install rbenv-rehash" do
+    command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install rbenv-rehash"
+    user node['ruby-env']['user']
+    group node['ruby-env']['group']
+    environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+    not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep rbenv-rehash"
+end
+
+# bundlerのインストール
+  execute "gem install bundler" do
+    command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install bundler"
+    user node['ruby-env']['user']
+    group node['ruby-env']['group']
+    environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+    not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep bundler"
+end
+
+# # rbenv-rehashとbundlerのインストール
+# %w{rbenv-rehash bundler}.each do |gem|
+#   execute "gem install #{gem}" do
+#     command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install #{gem}"
+#     user node['ruby-env']['user']
+#     group node['ruby-env']['group']
+#     environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+#     not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep #{gem}"
+#   end
+# end
