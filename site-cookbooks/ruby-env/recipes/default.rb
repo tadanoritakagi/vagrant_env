@@ -1,0 +1,81 @@
+#
+# Cookbook Name:: ruby-env
+# Recipe:: default
+#
+# Copyright 2014, YOUR_COMPANY_NAME
+#
+# All rights reserved - Do Not Redistribute
+#
+# gcc, openssl, sqliteをインストール
+%w(gcc git openssl-devel sqlite-devel).each do |pkg|
+  package pkg do
+    action :install
+  end
+end
+
+# ~/.rbenvにrbenvを配置
+# attributes/default.rb作成して初期設定必要
+git "/home/#{node['ruby-env']['user']}/.rbenv" do
+  # Githubより最新のリポジトリを取得
+  repository node["ruby-env"]["rbenv_url"]
+  action :sync
+  user node['ruby-env']['user']
+  group node['ruby-env']['group']
+end
+
+# rbenvが実行できるように.bash_profileを書き換え(macと同じ内容)
+# templates/default/.bash_profile.erb作成必要
+template ".bash_profile" do
+  source ".bash_profile.erb"
+  path   "/home/#{node['ruby-env']['user']}/.bash_profile"
+  mode   0644
+  owner  node['ruby-env']['user']
+  group  node['ruby-env']['group']
+  # 既にrbenvという文字列が.bash_profile内にない時のみ書き換え
+  not_if "grep rbenv ~/.bash_profile", :environment => { :'HOME' => "/home/#{node['ruby-env']['user']}" }
+end
+
+# pluginsディレクトリを作成
+directory "/home/#{node['ruby-env']['user']}/.rbenv/plugins" do
+  owner  node['ruby-env']['user']
+  group  node['ruby-env']['group']
+  mode  0755
+  action :create
+end
+
+# plugins/ruby-buildにruby-buildをダウンロード
+git "/home/#{node['ruby-env']['user']}/.rbenv/plugins/ruby-build" do
+  repository node["ruby-env"]["ruby-build_url"]
+  action :sync
+  user node['ruby-env']['user']
+  group node['ruby-env']['group']
+end
+
+# rbenvのinstallコマンドを実行できるように設定
+execute "rbenv install #{node['ruby-env']['version']}" do
+  command "/home/#{node['ruby-env']['user']}/.rbenv/bin/rbenv install #{node['ruby-env']['version']}"
+  user node['ruby-env']['user']
+  group node['ruby-env']['group']
+  environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+  # versions/x.x.xというバージョンファイルがない時のみ実行
+  not_if { File.exists?("/home/#{node['ruby-env']['user']}/.rbenv/versions/#{node['ruby-env']['version']}")}
+end
+
+# rbenvのglobalコマンドを実行できるように設定
+execute "rbenv global #{node['ruby-env']['version']}" do
+  command "/home/#{node['ruby-env']['user']}/.rbenv/bin/rbenv global #{node['ruby-env']['version']}"
+  user node['ruby-env']['user']
+  group node['ruby-env']['group']
+  environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+end
+
+# rbenv-rehashとbundlerのインストール
+%w{rbenv-rehash bundler}.each do |gem|
+  execute "gem install #{gem}" do
+    command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install #{gem}"
+    user node['ruby-env']['user']
+    group node['ruby-env']['group']
+    environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+    not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep #{gem}"
+  end
+end
