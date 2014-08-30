@@ -6,9 +6,10 @@
   "run_list": [
   "recipe[vim]",
   "recipe[apache]",
-  "recipe[mysql]"
+  "recipe[mysql]",
+  "recipe[ruby-env]"
   ],
-  
+
   "automatic": {
     "ipaddress": "hoge"
   }
