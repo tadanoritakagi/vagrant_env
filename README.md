@@ -115,7 +115,8 @@ $ vagrant provision
 * rubyのcookbookを作成  
 $ bundle exec knife cookbook create ruby-env -o site-cookbooks  
 * rbenv install, rbenv rehash, rbenv global, ruby-buil, bundler  
-rails, nokogiri(依存するlibxml2, libxslt)をインストールするレシピを作成  
+rails, nokogiri(依存するlibxml2, libxslt), rubygems-update, Imagemagick,  
+RMagickをインストールするレシピを作成  
 $ vim site-cookbooks/ruby-env/recipe/default.rb  
 ※ 実際の上記ファイルを参照  
 * 変数を設定する  
