@@ -97,7 +97,7 @@ end
     not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep bundler"
 end
 
-# 依存しているlibxml2/libxsltのインストール
+# nokogiriが依存しているlibxml2/libxsltのインストール
 %w(libxml2 libxml2-devel libxslt libxslt-devel).each do |pkg|
   package pkg do
     action :install
@@ -129,6 +129,24 @@ execute "rubygems-update" do
   group node['ruby-env']['group']
   environment 'HOME' => "/home/#{node['ruby-env']['user']}"
 end
+
+# RMagickが依存しているImageMagickのインストール
+%w(ImageMagick ImageMagick-devel).each do |pkg|
+  package pkg do
+    action :install
+  end
+end
+
+# RMagickのインストール
+  execute "gem install rmagick" do
+    command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install rmagick"
+    user node['ruby-env']['user']
+    group node['ruby-env']['group']
+    environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+    not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep rmagick"
+end
+
+
 
 # # rbenv-rehashとbundlerのインストール
 # %w{rbenv-rehash bundler}.each do |gem|
