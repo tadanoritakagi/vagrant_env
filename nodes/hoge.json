@@ -8,6 +8,12 @@
   "recipe[apache]",
   "recipe[mysql]",
   "recipe[ruby-env]",
+  "recipe[ruby-env::bundler_install]",
+  "recipe[ruby-env::nokogiri]",
+  "recipe[ruby-env::rails]",
+  "recipe[ruby-env::rehash]",
+  "recipe[ruby-env::rmagick]",
+  "recipe[ruby-env::rubygems_upgrade]",
   "recipe[nodejs]"
   ],
 

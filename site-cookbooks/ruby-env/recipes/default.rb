@@ -69,82 +69,82 @@ execute "rbenv global #{node['ruby-env']['version']}" do
   environment 'HOME' => "/home/#{node['ruby-env']['user']}"
 end
 
-# railsのインストール
-  execute "gem install rails -v '#{node['ruby-env']['rails_version']}'" do
-    command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install rails -v '#{node['ruby-env']['rails_version']}'"
-    user node['ruby-env']['user']
-    group node['ruby-env']['group']
-    environment 'HOME' => "/home/#{node['ruby-env']['user']}"
-    not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep rails -v '#{node['ruby-env']['rails_version']}'"
-end
+# # railsのインストール
+#   execute "gem install rails -v '#{node['ruby-env']['rails_version']}'" do
+#     command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install rails -v '#{node['ruby-env']['rails_version']}'"
+#     user node['ruby-env']['user']
+#     group node['ruby-env']['group']
+#     environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+#     not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep rails -v '#{node['ruby-env']['rails_version']}'"
+# end
 
 
-# rbenv-rehashのインストール
-  execute "gem install rbenv-rehash" do
-    command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install rbenv-rehash"
-    user node['ruby-env']['user']
-    group node['ruby-env']['group']
-    environment 'HOME' => "/home/#{node['ruby-env']['user']}"
-    not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep rbenv-rehash"
-end
+# # rbenv-rehashのインストール
+#   execute "gem install rbenv-rehash" do
+#     command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install rbenv-rehash"
+#     user node['ruby-env']['user']
+#     group node['ruby-env']['group']
+#     environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+#     not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep rbenv-rehash"
+# end
 
-# bundlerのインストール
-  execute "gem install bundler" do
-    command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install bundler"
-    user node['ruby-env']['user']
-    group node['ruby-env']['group']
-    environment 'HOME' => "/home/#{node['ruby-env']['user']}"
-    not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep bundler"
-end
+# # bundlerのインストール
+#   execute "gem install bundler" do
+#     command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install bundler"
+#     user node['ruby-env']['user']
+#     group node['ruby-env']['group']
+#     environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+#     not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep bundler"
+# end
 
-# nokogiriが依存しているlibxml2/libxsltのインストール
-%w(libxml2 libxml2-devel libxslt libxslt-devel).each do |pkg|
-  package pkg do
-    action :install
-  end
-end
+# # nokogiriが依存しているlibxml2/libxsltのインストール
+# %w(libxml2 libxml2-devel libxslt libxslt-devel).each do |pkg|
+#   package pkg do
+#     action :install
+#   end
+# end
 
-# nokogiriのインストール
-  execute "gem install nokogiri -- --use-system-libraries" do
-    command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install nokogiri -- --use-system-libraries"
-    user node['ruby-env']['user']
-    group node['ruby-env']['group']
-    environment 'HOME' => "/home/#{node['ruby-env']['user']}"
-    not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep nokogiri"
-end
+# # nokogiriのインストール
+#   execute "gem install nokogiri -- --use-system-libraries" do
+#     command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install nokogiri -- --use-system-libraries"
+#     user node['ruby-env']['user']
+#     group node['ruby-env']['group']
+#     environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+#     not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep nokogiri"
+# end
 
-# rubygems-updateのインストール
-  execute "gem install rubygems-update" do
-    command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install rubygems-update"
-    user node['ruby-env']['user']
-    group node['ruby-env']['group']
-    environment 'HOME' => "/home/#{node['ruby-env']['user']}"
-    not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep rubygems-update"
-end
+# # rubygems-updateのインストール
+#   execute "gem install rubygems-update" do
+#     command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install rubygems-update"
+#     user node['ruby-env']['user']
+#     group node['ruby-env']['group']
+#     environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+#     not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep rubygems-update"
+# end
 
-# rubygems-update実行
-execute "rubygems-update" do
-  command "/home/#{node['ruby-env']['user']}/.rbenv/shims/update_rubygems"
-  user node['ruby-env']['user']
-  group node['ruby-env']['group']
-  environment 'HOME' => "/home/#{node['ruby-env']['user']}"
-end
+# # rubygems-update実行
+# execute "rubygems-update" do
+#   command "/home/#{node['ruby-env']['user']}/.rbenv/shims/update_rubygems"
+#   user node['ruby-env']['user']
+#   group node['ruby-env']['group']
+#   environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+# end
 
-# RMagickが依存しているImageMagickのインストール
-%w(ImageMagick ImageMagick-devel).each do |pkg|
-  package pkg do
-    action :install
-  end
-end
+# # RMagickが依存しているImageMagickのインストール
+# %w(ImageMagick ImageMagick-devel).each do |pkg|
+#   package pkg do
+#     action :install
+#   end
+# end
 
-# RMagickのインストール
-  execute "gem install rmagick" do
-    command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install rmagick"
-    user node['ruby-env']['user']
-    group node['ruby-env']['group']
-    environment 'HOME' => "/home/#{node['ruby-env']['user']}"
-    not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep rmagick"
-end
+# # RMagickのインストール
+#   execute "gem install rmagick" do
+#     command "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem install rmagick"
+#     user node['ruby-env']['user']
+#     group node['ruby-env']['group']
+#     environment 'HOME' => "/home/#{node['ruby-env']['user']}"
+#     not_if "/home/#{node['ruby-env']['user']}/.rbenv/shims/gem list | grep rmagick"
+# end
 
 
 
