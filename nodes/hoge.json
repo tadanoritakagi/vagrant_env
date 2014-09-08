@@ -3,6 +3,11 @@
     "server_root_password": "rootpass"
   },
 
+  "nginx": {
+    "port": 81,
+    "env": "ruby"
+  },
+
   "run_list": [
   "recipe[vim]",
   "recipe[apache]",
@@ -14,7 +19,9 @@
   "recipe[ruby-env::rehash]",
   "recipe[ruby-env::rmagick]",
   "recipe[ruby-env::rubygems_upgrade]",
-  "recipe[nodejs]"
+  "recipe[nodejs]",
+  "recipe[yum-epel]",
+  "recipe[nginx]"
   ],
 
   "automatic": {

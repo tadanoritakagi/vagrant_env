@@ -1,28 +1,27 @@
 #
-# Cookbook Name:: apache
+# Cookbook Name:: nginx
 # Recipe:: default
 #
 # Copyright 2014, YOUR_COMPANY_NAME
 #
 # All rights reserved - Do Not Redistribute
 #
-
-package "httpd" do
+package "nginx" do
   action :install
 end
 
-# apache設定ファイルhttpd.confの場所と場所の設定後のリロード
-template "httpd.conf" do
-  path "/etc/httpd/conf/httpd.conf"
-  source "httpd.conf.erb"
+# nginx設定ファイルnginx.confの場所と場所の設定後のリロード
+template "nginx.conf" do
+  path "/etc/nginx/nginx.conf"
+  source "nginx.conf.erb"
   owner "root"
   group "root"
   mode 0644
-  notifies :reload, 'service[httpd]'
+  notifies :reload, 'service[nginx]'
 end
 
 # 自動起動
-service "httpd" do
+service "nginx" do
   supports :status => true, :restart => true, :reload => true
   action [:enable, :start]
 end
