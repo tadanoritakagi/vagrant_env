@@ -11,3 +11,11 @@
      action :install
    end
 end
+
+# php設定ファイルphp.iniの場所
+template "php.ini" do
+  path "/etc/php.ini"
+  owner "root"
+  group "root"
+  mode 0644
+end
